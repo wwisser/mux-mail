@@ -1,5 +1,6 @@
 package eu.muxcraft.mail;
 
+import eu.muxcraft.mail.inventory.MailInventory;
 import eu.muxcraft.mail.service.MailService;
 import eu.muxcraft.mail.service.impl.LocalMailService;
 import lombok.Getter;
@@ -16,9 +17,15 @@ public class MuxMail extends JavaPlugin {
     @Getter
     private static MailService mailService;
 
+    @Getter
+    private static MailInventory mailInventory;
+
     @Override
     public void onEnable() {
         MuxMail.mailService = new LocalMailService();
+        MuxMail.mailInventory = new MailInventory(MuxMail.mailService);
+
+        super.getServer().getPluginManager().registerEvents(MuxMail.mailInventory, this);
     }
 
 }
